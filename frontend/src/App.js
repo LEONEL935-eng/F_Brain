@@ -11,7 +11,7 @@ function App() {
 
   const handleClear = () => {
     setExpression("");
-    setResult("");
+    setResult("")
   };
 
   const handleDelete = () => {
@@ -20,9 +20,10 @@ function App() {
 
   const handleEvaluate = () => {
     try {
-      // Calcul basique avec eval (temporaire — à remplacer par appel API plus tard)
+      // Evaluer expression pour +, -, *, /, %
       const res = eval(expression);
       setResult(res);
+      setExpression(res.toString()); // mettre le résultat dans l'expression pour enchaîner
     } catch (err) {
       setResult("Erreur");
     }
@@ -30,7 +31,8 @@ function App() {
 
   const handleScientific = (func) => {
     try {
-      const val = parseFloat(expression);
+      // Evaluer l'expression d'abord
+      const val = eval(expression);
       let res = "";
       switch (func) {
         case "sin":
@@ -39,19 +41,11 @@ function App() {
         case "cos":
           res = Math.cos(val);
           break;
-        case "tan":
-          res = Math.tan(val);
-          break;
-        case "sqrt":
-          res = Math.sqrt(val);
-          break;
-        case "log":
-          res = Math.log10(val);
-          break;
         default:
           res = "Erreur";
       }
       setResult(res);
+      setExpression(res.toString());
     } catch (err) {
       setResult("Erreur");
     }
@@ -90,11 +84,9 @@ function App() {
           <button onClick={() => handleClick("+")}>+</button>
 
           <button onClick={() => handleClick("%")}>%</button>
+
           <button onClick={() => handleScientific("sin")}>sin</button>
           <button onClick={() => handleScientific("cos")}>cos</button>
-          <button onClick={() => handleScientific("tan")}>tan</button>
-          <button onClick={() => handleScientific("sqrt")}>√</button>
-          <button onClick={() => handleScientific("log")}>log</button>
         </div>
       </div>
     </div>
